@@ -1,0 +1,199 @@
+    :root {
+      --bg: #f3f6fb;
+      --surface: #ffffff;
+      --primary: #0b6fbf;
+      --primary-dark: #095a9a;
+      --accent: #12b981;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 12px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .topbar {
+      background: #0f172a;
+      color: #e2e8f0;
+      text-align: center;
+      padding: 0.55rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0b6fbf, #27a4ea);
+      color: #fff;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .brand img {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      background: #fff;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+    }
+
+    .brand p {
+      margin: 0.2rem 0 0;
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+
+    .search-wrap {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 12px;
+      padding: 0.55rem 0.8rem;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      outline: none;
+      color: #fff;
+      font-size: 0.98rem;
+    }
+
+    .search-wrap input::placeholder { color: #dbeafe; }
+
+    main {
+      max-width: 1200px;
+      margin: 1.5rem auto 3rem;
+      padding: 0 1rem;
+    }
+
+    .categoria {
+      margin-bottom: 2rem;
+    }
+
+    .categoria h2 {
+      margin: 0 0 1rem;
+      font-size: 1.2rem;
+      background: #e7f3fd;
+      border: 1px solid #cde6fb;
+      border-left: 5px solid var(--primary);
+      border-radius: 0 10px 10px 0;
+      padding: 0.7rem 0.9rem;
+    }
+
+    .productos {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .producto {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .producto:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.14);
+    }
+
+    .producto img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+    }
+
+    .producto-info {
+      padding: 0.85rem;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .producto-info h3 {
+      margin: 0;
+      font-size: 1rem;
+      min-height: 2.5rem;
+    }
+
+    .precio {
+      color: var(--primary);
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .cta {
+      margin: 0;
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 0.5rem;
+    }
+
+    .hidden { display: none !important; }
+
+    #sin-resultados {
+      display: none;
+      background: #fff4e5;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      border-radius: 10px;
+      padding: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 1rem;
+    }
+
+    @media (min-width: 860px) {
+      .header-container {
+        grid-template-columns: 1.2fr 1fr;
+      }
+    }
+  
