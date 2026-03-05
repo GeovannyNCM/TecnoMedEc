@@ -3,13 +3,214 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TecnoMedEc · Reinicio</title>
+  <title>MedicalBuy · Filtro dinámico por categorías</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="reset-wrap">
-    <h1>Proyecto reiniciado</h1>
-    <p>Se eliminó el catálogo anterior para comenzar desde cero.</p>
-  </main>
+  <div class="container">
+    <h1>
+      <i class="fas fa-briefcase-medical"></i>
+      MedicalStock
+      <span class="filter-label">🔍 filtro por categorías</span>
+    </h1>
+
+    <div class="filtros-container" id="filtrosCategorias"></div>
+
+    <div class="categorias-grid" id="appGrid"></div>
+
+    <div class="footer-note">
+      <i class="fas fa-filters"></i> Haz clic en cualquier categoría para filtrar. El botón "TODAS" restablece la vista.
+      <br /><small>📲 Mensaje WhatsApp personalizado con producto, cantidad y total.</small>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const productos = [
+        { categoria: "CUIDADOS", icono: "fa-hand-holding-heart", producto: "Crema Barrera Zinco", precio: 12450, stock: 8, unidad: "pote 250g", imagen: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80" },
+        { categoria: "CUIDADOS", icono: "fa-hand-holding-heart", producto: "Apósitos estériles 10x10", precio: 3200, stock: 25, unidad: "caja 10u", imagen: "https://images.unsplash.com/photo-1584308972272-9e4e7685e80f?w=400&q=80" },
+        { categoria: "CUIDADOS", icono: "fa-hand-holding-heart", producto: "Solución antiséptica", precio: 5450, stock: 14, unidad: "fco x 250ml", imagen: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80" },
+
+        { categoria: "DIAGNÓSTICO", icono: "fa-stethoscope", producto: "Estetoscopio Profesional", precio: 38900, stock: 5, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=400&q=80" },
+        { categoria: "DIAGNÓSTICO", icono: "fa-stethoscope", producto: "Esfigmomanómetro aneroide", precio: 25750, stock: 7, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=400&q=80" },
+
+        { categoria: "EMERGENCIA", icono: "fa-truck-medical", producto: "Camilla Plegable", precio: 184500, stock: 2, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1582719508461-905c6734fd2e?w=400&q=80" },
+        { categoria: "EMERGENCIA", icono: "fa-truck-medical", producto: "Botiquín tipo maletín", precio: 22400, stock: 9, unidad: "equipo", imagen: "https://images.unsplash.com/photo-1582719508461-905c6734fd2e?w=400&q=80" },
+
+        { categoria: "EQUIPOS", icono: "fa-lungs", producto: "Concentrador Oxígeno 5L", precio: 625000, stock: 3, unidad: "equipo", imagen: "https://images.unsplash.com/photo-1582719508461-905c6734fd2e?w=400&q=80" },
+        { categoria: "EQUIPOS", icono: "fa-lungs", producto: "Nebulizador compresor", precio: 38700, stock: 11, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1582719508461-905c6734fd2e?w=400&q=80" },
+
+        { categoria: "INSTRUMENTAL", icono: "fa-scalpel", producto: "Kit cirugía menor (5pzas)", precio: 35750, stock: 12, unidad: "kit", imagen: "https://images.unsplash.com/photo-1581595220892-b8c465b1a3d4?w=400&q=80" },
+        { categoria: "INSTRUMENTAL", icono: "fa-scalpel", producto: "Pinzas Kelly curvas 14cm", precio: 8900, stock: 23, unidad: "par", imagen: "https://images.unsplash.com/photo-1581595220892-b8c465b1a3d4?w=400&q=80" },
+        { categoria: "INSTRUMENTAL", icono: "fa-scalpel", producto: "Bisturí desechable #22", precio: 2250, stock: 60, unidad: "caja 10u", imagen: "https://images.unsplash.com/photo-1581595220892-b8c465b1a3d4?w=400&q=80" },
+
+        { categoria: "INSUMOS", icono: "fa-syringe", producto: "Jeringas descartables 10ml (x100)", precio: 18990, stock: 25, unidad: "caja", imagen: "https://images.unsplash.com/photo-1584308972272-9e4e7685e80f?w=400&q=80" },
+        { categoria: "INSUMOS", icono: "fa-syringe", producto: "Gasas estériles 7.5x7.5 (x500)", precio: 15300, stock: 32, unidad: "paquete", imagen: "https://images.unsplash.com/photo-1584308972272-9e4e7685e80f?w=400&q=80" },
+
+        { categoria: "MOBILIARIO", icono: "fa-couch", producto: "Sillón de exploración", precio: 312000, stock: 0, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=400&q=80" },
+        { categoria: "MOBILIARIO", icono: "fa-couch", producto: "Carro de paro metálico", precio: 189000, stock: 4, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=400&q=80" },
+
+        { categoria: "INDUMENTARIA", icono: "fa-tshirt", producto: "Camisolín descartable (x10)", precio: 8450, stock: 40, unidad: "paquete", imagen: "https://images.unsplash.com/photo-1581595220892-b8c465b1a3d4?w=400&q=80" },
+        { categoria: "INDUMENTARIA", icono: "fa-tshirt", producto: "Gorro quirúrgico (x50)", precio: 6200, stock: 17, unidad: "bolsa", imagen: "https://images.unsplash.com/photo-1581595220892-b8c465b1a3d4?w=400&q=80" }
+      ];
+
+      const WHATSAPP_NUMBER = "5491122334455";
+
+      const grid = document.getElementById("appGrid");
+      const filtrosDiv = document.getElementById("filtrosCategorias");
+      const categoriasUnicas = [...new Set(productos.map((p) => p.categoria))].sort();
+
+      let categoriaActiva = null;
+
+      function renderizarTarjetas() {
+        grid.innerHTML = "";
+        productos.forEach((prod, idx) => {
+          const tieneStock = prod.stock > 0;
+          const stockClass = tieneStock ? "disponible" : "agotado";
+          const stockText = tieneStock ? `${prod.stock} en stock` : "SIN STOCK";
+          const stockIcon = tieneStock ? "fa-check-circle" : "fa-times-circle";
+
+          const card = document.createElement("div");
+          card.className = `card ${categoriaActiva && prod.categoria !== categoriaActiva ? "hidden-category" : ""}`;
+          card.dataset.categoria = prod.categoria;
+          card.dataset.indice = idx;
+
+          card.innerHTML = `
+            <div class="img-container">
+              <img src="${prod.imagen}" alt="${prod.producto}" loading="lazy"
+                onerror="this.onerror=null; this.src='https://placehold.co/400x300/dfeef8/3b7e9c?text=${encodeURIComponent(prod.categoria)}';">
+              <span class="cat-icon-overlay">
+                <i class="fas ${prod.icono}"></i> ${prod.categoria}
+              </span>
+            </div>
+            <div class="card-content">
+              <div class="nombre-producto">${prod.producto}</div>
+              <div class="precio-stock-row">
+                <span class="precio">$${prod.precio.toLocaleString("es-AR")} <small>/${prod.unidad}</small></span>
+                <span class="stock-indicator ${stockClass}">
+                  <i class="fas ${stockIcon}"></i> ${stockText}
+                </span>
+              </div>
+
+              <div class="control-cantidad">
+                <label for="cant-${idx}"><i class="fas fa-sort-numeric-up"></i> Cantidad</label>
+                <input type="number" id="cant-${idx}" class="input-cantidad" value="1" min="1" max="${prod.stock}"
+                  ${tieneStock ? "" : "disabled"}
+                  data-precio="${prod.precio}"
+                  data-producto="${prod.producto}"
+                  data-stock="${prod.stock}">
+              </div>
+
+              <button class="btn-wsp ${tieneStock ? "" : "disabled-btn"}" data-index="${idx}" data-producto="${prod.producto}" data-precio="${prod.precio}" data-stock="${prod.stock}">
+                <i class="fab fa-whatsapp"></i> Solicitar por WhatsApp
+              </button>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        asignarEventosWSP();
+        asignarEventosInputs();
+      }
+
+      function renderizarBotonesCategoria() {
+        const btnTodas = document.createElement("button");
+        btnTodas.className = `btn-categoria todas ${categoriaActiva === null ? "activo" : ""}`;
+        btnTodas.innerHTML = '<i class="fas fa-border-all"></i> TODAS';
+        btnTodas.dataset.categoria = "todas";
+        filtrosDiv.appendChild(btnTodas);
+
+        categoriasUnicas.forEach((cat) => {
+          const btn = document.createElement("button");
+          btn.className = `btn-categoria ${categoriaActiva === cat ? "activo" : ""}`;
+          const prodEjemplo = productos.find((p) => p.categoria === cat);
+          const icono = prodEjemplo ? prodEjemplo.icono : "fa-tag";
+          btn.innerHTML = `<i class="fas ${icono}"></i> ${cat}`;
+          btn.dataset.categoria = cat;
+          filtrosDiv.appendChild(btn);
+        });
+
+        document.querySelectorAll(".btn-categoria").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const catSeleccionada = this.dataset.categoria;
+            categoriaActiva = catSeleccionada === "todas" ? null : catSeleccionada;
+
+            document.querySelectorAll(".btn-categoria").forEach((b) => b.classList.remove("activo"));
+            this.classList.add("activo");
+
+            filtrarPorCategoria(categoriaActiva);
+          });
+        });
+      }
+
+      function filtrarPorCategoria(categoria) {
+        const tarjetas = document.querySelectorAll(".card");
+        tarjetas.forEach((card) => {
+          const catCard = card.dataset.categoria;
+          if (categoria === null || catCard === categoria) {
+            card.classList.remove("hidden-category");
+          } else {
+            card.classList.add("hidden-category");
+          }
+        });
+      }
+
+      function asignarEventosWSP() {
+        const botones = document.querySelectorAll(".btn-wsp:not(.disabled-btn)");
+        botones.forEach((btn) => {
+          btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            const idx = this.dataset.index;
+            const producto = this.dataset.producto;
+            const precioUnit = parseFloat(this.dataset.precio);
+            const stockMax = parseInt(this.dataset.stock);
+
+            const inputCant = document.getElementById(`cant-${idx}`);
+            if (!inputCant) return;
+
+            let cantidad = parseInt(inputCant.value);
+            if (isNaN(cantidad) || cantidad < 1) cantidad = 1;
+            if (cantidad > stockMax) cantidad = stockMax;
+            inputCant.value = cantidad;
+
+            const total = precioUnit * cantidad;
+            const mensaje =
+              `🛒 *Pedido médico*%0A` +
+              `▪️ *Producto:* ${producto}%0A` +
+              `▪️ *Cantidad:* ${cantidad}%0A` +
+              `▪️ *Precio unit.:* $${precioUnit.toLocaleString("es-AR")}%0A` +
+              `▪️ *Total:* $${total.toLocaleString("es-AR")}%0A` +
+              `%0A📍 Enviado desde catálogo con filtros.`;
+
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}`;
+            window.open(url, "_blank");
+          });
+        });
+      }
+
+      function asignarEventosInputs() {
+        const inputsCantidad = document.querySelectorAll(".input-cantidad");
+        inputsCantidad.forEach((inp) => {
+          inp.addEventListener("change", function () {
+            const max = parseInt(this.max);
+            let val = parseInt(this.value);
+            if (isNaN(val) || val < 1) val = 1;
+            if (val > max) val = max;
+            this.value = val;
+          });
+          inp.addEventListener("input", function () {
+            const val = parseInt(this.value);
+            const max = parseInt(this.max);
+            if (!isNaN(val) && val > max) this.value = max;
+            else if (!isNaN(val) && val < 1) this.value = 1;
+          });
+        });
+      }
+
+      renderizarBotonesCategoria();
+      renderizarTarjetas();
+    })();
+  </script>
 </body>
 </html>
