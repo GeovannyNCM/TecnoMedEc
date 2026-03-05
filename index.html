@@ -7,25 +7,71 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="topbar">Envíos y atención personalizada por WhatsApp: +593 99 623 4944</div>
+  <div class="utility-bar">
+    <span>🚚 Envíos nacionales</span>
+    <span>📞 +593 99 623 4944</span>
+    <span>🕒 Lunes a Sábado</span>
+  </div>
 
-  <header>
-    <div class="header-container">
+  <header class="site-header">
+    <div class="header-top">
       <div class="brand">
         <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=200&q=80" alt="Logo TecnoMedEc" />
         <div>
-          <h1>TecnoMedEc - Tienda Médica</h1>
-          <p>Catálogo estilo e-commerce con productos para clínicas, hospitales y consultorios.</p>
+          <h1>TecnoMedEc</h1>
+          <p>Equipos y suministros médicos</p>
         </div>
       </div>
+
       <label class="search-wrap" for="buscador">
-        🔎
-        <input id="buscador" type="search" placeholder="Buscar por nombre o categoría..." autocomplete="off" />
+        <span>🔎</span>
+        <input id="buscador" type="search" placeholder="Buscar productos o categorías..." autocomplete="off" />
       </label>
+
+      <a class="contact-pill" href="https://wa.me/593996234944" target="_blank" rel="noopener noreferrer">WhatsApp</a>
     </div>
+
+    <nav class="menu-bar">
+      <a href="#catalogo">Inicio</a>
+      <a href="#atajos-categorias">Categorías</a>
+      <a href="#promos">Ofertas</a>
+      <a href="#catalogo">Tienda</a>
+    </nav>
   </header>
 
   <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="overline">LÍNEA PROFESIONAL</p>
+        <h2>Todo para tu centro médico, en un solo lugar</h2>
+        <p>Catálogo estilo e-commerce para comprar por WhatsApp de forma rápida y segura.</p>
+        <a href="#catalogo">Ver catálogo</a>
+      </div>
+      <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80" alt="Equipamiento médico destacado" />
+    </section>
+
+    <section id="atajos-categorias" class="category-shortcuts"></section>
+
+    <section id="promos" class="promo-grid">
+      <article class="promo-card blue">
+        <p>OFERTA DESTACADA</p>
+        <h3>Hasta 30% OFF en diagnóstico</h3>
+      </article>
+      <article class="promo-card teal">
+        <p>NUEVO INGRESO</p>
+        <h3>Equipos portátiles para consulta</h3>
+      </article>
+      <article class="promo-card dark">
+        <p>COMPRA ÁGIL</p>
+        <h3>Atención directa por WhatsApp</h3>
+      </article>
+    </section>
+
+    <section class="section-heading">
+      <h2>Productos destacados</h2>
+      <p>Selecciona un producto para enviar tu solicitud.</p>
+    </section>
+
     <div id="sin-resultados">No encontramos productos con ese término. Intenta con otra palabra.</div>
     <div id="catalogo"></div>
   </main>
@@ -77,6 +123,23 @@
     const catalogo = document.getElementById('catalogo');
     const buscador = document.getElementById('buscador');
     const sinResultados = document.getElementById('sin-resultados');
+    const atajos = document.getElementById('atajos-categorias');
+
+    function crearAtajos() {
+      atajos.innerHTML = '';
+      Object.keys(categorias).forEach((categoria) => {
+        const item = document.createElement('button');
+        item.className = 'shortcut';
+        item.type = 'button';
+        item.textContent = categoria;
+        item.addEventListener('click', () => {
+          buscador.value = categoria;
+          crearCatalogo(categoria);
+          document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
+        });
+        atajos.appendChild(item);
+      });
+    }
 
     function crearCatalogo(filtro = '') {
       catalogo.innerHTML = '';
@@ -135,6 +198,7 @@
       crearCatalogo(event.target.value);
     });
 
+    crearAtajos();
     crearCatalogo();
   </script>
 </body>
