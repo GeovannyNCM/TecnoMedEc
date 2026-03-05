@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productos Médicos</title>
+  <style>
+    :root {
+      --bg: #f4f8fb;
+      --card: #ffffff;
+      --brand: #0077b6;
+      --brand-dark: #005f8f;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: linear-gradient(135deg, #0077b6, #00a8e8);
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+    }
+
+    header p {
+      margin: 0.6rem auto 0;
+      max-width: 760px;
+      opacity: 0.95;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 1.5rem auto 3rem;
+      padding: 0 1rem;
+    }
+
+    .categoria {
+      margin-bottom: 2rem;
+    }
+
+    .categoria h2 {
+      border-left: 6px solid var(--brand);
+      background: #eaf6fd;
+      padding: 0.7rem 1rem;
+      margin: 0 0 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 1.3rem;
+    }
+
+    .productos {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .producto {
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .producto:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+    }
+
+    .producto img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .producto-info {
+      padding: 0.9rem 1rem 1rem;
+    }
+
+    .producto-info h3 {
+      margin: 0;
+      font-size: 1.02rem;
+    }
+
+    .producto-info p {
+      margin: 0.5rem 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Catálogo de Productos Médicos</h1>
+    <p>Haz clic en cualquier producto para solicitar información por WhatsApp.</p>
+  </header>
+
+  <main id="catalogo"></main>
+
+  <footer>
+    TecnoMedEc · Atención por WhatsApp: +593 99 623 4944
+  </footer>
+
+  <script>
+    const phoneNumber = '593996234944';
+
+    const categorias = {
+      'CUIDADOS': [
+        { nombre: 'Guantes de nitrilo (caja x100)', imagen: 'https://images.unsplash.com/photo-1584824486539-53bb4646bdbc?auto=format&fit=crop&w=800&q=80' },
+        { nombre: 'Gasas estériles 10x10', imagen: 'https://images.unsplash.com/photo-1581595219315-a187dd40c322?auto=format&fit=crop&w=800&q=80' }
+      ],
+      'DIAGNÓSTICO': [
+        { nombre: 'Tensiómetro digital', imagen: 'https://images.unsplash.com/photo-1582719362891-72f4f3c5f03e?auto=format&fit=crop&w=800&q=80' },
+        { nombre: 'Oxímetro de pulso', imagen: 'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=800&q=80' }
+      ],
+      'EMERGENCIA': [
+        { nombre: 'Botiquín de emergencia', imagen: 'https://images.unsplash.com/photo-1584433144859-1fc3ab64a957?auto=format&fit=crop&w=800&q=80' },
+        { nombre: 'Camilla plegable', imagen: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80' }
+      ],
+      'EQUIPOS': [
+        { nombre: 'Nebulizador portátil', imagen: 'https://images.unsplash.com/photo-1612532275214-e4ca76d0e4d1?auto=format&fit=crop&w=800&q=80' },
+        { nombre: 'Monitor multiparámetro', imagen: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=800&q=80' }
+      ],
+      'INSTRUMENTAL': [
+        { nombre: 'Pinza quirúrgica', imagen: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80' },
+        { nombre: 'Set de bisturí', imagen: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=800&q=80' }
+      ],
+      'INSUMOS': [
+        { nombre: 'Jeringas desechables 10ml', imagen: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=800&q=80' },
+        { nombre: 'Mascarillas quirúrgicas', imagen: 'https://images.unsplash.com/photo-1584362917165-526a968579e8?auto=format&fit=crop&w=800&q=80' }
+      ],
+      'MOBILIARIO': [
+        { nombre: 'Cama hospitalaria manual', imagen: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80' },
+        { nombre: 'Mesa de mayo', imagen: 'https://images.unsplash.com/photo-1580281657527-47f249e8f1cb?auto=format&fit=crop&w=800&q=80' }
+      ],
+      'INDUMENTARIA': [
+        { nombre: 'Uniforme médico unisex', imagen: 'https://images.unsplash.com/photo-1612277795421-9bc7706a4a41?auto=format&fit=crop&w=800&q=80' },
+        { nombre: 'Bata médica antifluido', imagen: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80' }
+      ],
+      'OXIGENOTERAPIA': [
+        { nombre: 'Concentrador de oxígeno 5L', imagen: 'https://images.unsplash.com/photo-1584467735871-bfb80b7fcb14?auto=format&fit=crop&w=800&q=80' },
+        { nombre: 'Cánula nasal adulto', imagen: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=800&q=80' }
+      ]
+    };
+
+    const catalogo = document.getElementById('catalogo');
+
+    for (const [categoria, productos] of Object.entries(categorias)) {
+      const section = document.createElement('section');
+      section.className = 'categoria';
+
+      const titulo = document.createElement('h2');
+      titulo.textContent = categoria;
+
+      const grid = document.createElement('div');
+      grid.className = 'productos';
+
+      productos.forEach((producto) => {
+        const enlace = document.createElement('a');
+        enlace.className = 'producto';
+
+        const mensaje = `Hola, me interesa el producto: ${producto.nombre}. Imagen: ${producto.imagen}`;
+        enlace.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(mensaje)}`;
+        enlace.target = '_blank';
+        enlace.rel = 'noopener noreferrer';
+
+        enlace.innerHTML = `
+          <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy" />
+          <div class="producto-info">
+            <h3>${producto.nombre}</h3>
+            <p>Clic para pedir más información por WhatsApp</p>
+          </div>
+        `;
+
+        grid.appendChild(enlace);
+      });
+
+      section.appendChild(titulo);
+      section.appendChild(grid);
+      catalogo.appendChild(section);
+    }
+  </script>
+</body>
+</html>
