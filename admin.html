@@ -4,32 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MedicalBuy · Admin Firebase</title>
-    <!-- Firebase SDK (versión compat para usar firebase.xxx) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ========== ESTILOS COMPACTOS ========== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-        }
-
-        body {
-            background: #f5fafd;
-            padding: 1rem;
-            color: #1a2e3f;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f5fafd; padding: 1rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
         /* Login */
         .login-container {
             max-width: 400px;
@@ -40,16 +25,15 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: 1px solid #d4e6f0;
         }
-
+        
         .login-container h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
             color: #1f7a8c;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
+        
         .form-control {
             width: 100%;
             padding: 0.8rem 1.2rem;
@@ -57,13 +41,8 @@
             border: 2px solid #d9eaf5;
             border-radius: 40px;
             font-size: 1rem;
-            outline: none;
         }
-
-        .form-control:focus {
-            border-color: #1f7a8c;
-        }
-
+        
         .btn {
             background: #1f7a8c;
             color: white;
@@ -75,36 +54,19 @@
             cursor: pointer;
             width: 100%;
             margin-top: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: background 0.2s;
         }
-
-        .btn:hover {
-            background: #166b7c;
-        }
-
-        .btn-danger {
-            background: #e74c3c;
-        }
-
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-
-        .btn-secondary {
-            background: #95a5a6;
-        }
-
+        
+        .btn:hover { background: #166b7c; }
+        .btn-danger { background: #e74c3c; }
+        .btn-danger:hover { background: #c0392b; }
+        
         .error-message {
             color: #e74c3c;
             margin-top: 1rem;
             text-align: center;
         }
-
-        /* Admin header */
+        
+        /* Admin panel */
         .admin-header {
             background: white;
             padding: 1rem 1.5rem;
@@ -115,15 +77,7 @@
             align-items: center;
             border: 1px solid #d4e6f0;
         }
-
-        .admin-header h2 {
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Formulario */
+        
         .form-card {
             background: white;
             padding: 1.5rem;
@@ -131,97 +85,55 @@
             margin-bottom: 1.5rem;
             border: 1px solid #d4e6f0;
         }
-
-        .form-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #1f7a8c;
-        }
-
+        
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin-bottom: 1rem;
         }
-
-        /* Tabla de productos */
+        
         .productos-grid {
             background: white;
             padding: 1.5rem;
             border-radius: 30px;
             border: 1px solid #d4e6f0;
         }
-
-        .productos-grid h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #1f7a8c;
-        }
-
+        
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
+        
         th {
             background: #e5f3fb;
             padding: 0.8rem;
             text-align: left;
-            font-weight: 600;
-            color: #1f7a8c;
         }
-
+        
         td {
             padding: 0.8rem;
             border-bottom: 1px solid #e2f0f8;
         }
-
+        
         .producto-imagen {
             width: 50px;
             height: 50px;
             object-fit: cover;
             border-radius: 10px;
-            border: 2px solid #d4e6f0;
         }
-
+        
         .btn-small {
             padding: 0.4rem 0.8rem;
             border: none;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.8rem;
             margin: 0 2px;
         }
-
-        .btn-edit {
-            background: #e1f0fa;
-            color: #1f7a8c;
-        }
-
-        .btn-delete {
-            background: #ffe5e5;
-            color: #c0392b;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 1rem;
-            border-radius: 40px;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
+        
+        .btn-edit { background: #e1f0fa; color: #1f7a8c; }
+        .btn-delete { background: #ffe5e5; color: #c0392b; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -242,7 +154,7 @@
         </div>
     </div>
 
-    <!-- Panel de Administración (visible solo después de login) -->
+    <!-- Panel de Administración -->
     <div id="adminContainer" class="container" style="display: none;">
         <div class="admin-header">
             <h2><i class="fas fa-user-shield"></i> Panel Admin - Firebase</h2>
@@ -251,25 +163,25 @@
             </button>
         </div>
 
-        <!-- Formulario para agregar/editar productos -->
+        <!-- Formulario -->
         <div class="form-card">
             <h3><i class="fas fa-plus-circle"></i> Agregar / Editar Producto</h3>
             <form id="productForm">
                 <input type="hidden" id="editKey" value="">
                 
                 <div class="form-row">
-                    <input type="text" id="categoria" class="form-control" placeholder="Categoría (ej: CUIDADOS)" required>
+                    <input type="text" id="categoria" class="form-control" placeholder="Categoría" required>
                     <input type="text" id="producto" class="form-control" placeholder="Nombre del producto" required>
                 </div>
                 
                 <div class="form-row">
-                    <input type="number" id="precio" class="form-control" placeholder="Precio" min="0" required>
-                    <input type="number" id="stock" class="form-control" placeholder="Stock" min="0" required>
+                    <input type="number" id="precio" class="form-control" placeholder="Precio" required>
+                    <input type="number" id="stock" class="form-control" placeholder="Stock" required>
                 </div>
                 
                 <div class="form-row">
                     <input type="url" id="imagen" class="form-control" placeholder="URL de la imagen" required>
-                    <input type="text" id="unidad" class="form-control" placeholder="Unidad (ej: unidad, caja)" value="unidad" required>
+                    <input type="text" id="unidad" class="form-control" placeholder="Unidad" value="unidad" required>
                 </div>
                 
                 <div class="form-row">
@@ -278,19 +190,11 @@
                         <option value="fa-stethoscope">Diagnóstico</option>
                         <option value="fa-truck-medical">Emergencia</option>
                         <option value="fa-lungs">Equipos</option>
-                        <option value="fa-scalpel">Instrumental</option>
-                        <option value="fa-syringe">Insumos</option>
-                        <option value="fa-couch">Mobiliario</option>
-                        <option value="fa-tshirt">Indumentaria</option>
                     </select>
                 </div>
                 
-                <button type="submit" class="btn" id="btnSubmit">
-                    <i class="fas fa-save"></i> Guardar Producto
-                </button>
-                <button type="button" class="btn btn-secondary" id="btnCancel" style="margin-top: 0.5rem;">
-                    <i class="fas fa-times"></i> Cancelar Edición
-                </button>
+                <button type="submit" class="btn">Guardar Producto</button>
+                <button type="button" class="btn" id="btnCancel" style="background: #95a5a6; margin-top: 0.5rem;">Cancelar</button>
             </form>
         </div>
 
@@ -298,7 +202,7 @@
         <div class="productos-grid">
             <h3><i class="fas fa-list"></i> Productos en Firebase</h3>
             <div style="overflow-x: auto;">
-                <table id="productosTable">
+                <table>
                     <thead>
                         <tr>
                             <th>Imagen</th>
@@ -310,11 +214,7 @@
                         </tr>
                     </thead>
                     <tbody id="productosBody">
-                        <tr>
-                            <td colspan="6" style="text-align: center; padding: 2rem;">
-                                <i class="fas fa-spinner fa-pulse"></i> Cargando productos...
-                            </td>
-                        </tr>
+                        <tr><td colspan="6" style="text-align: center;">Cargando...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -323,23 +223,23 @@
 
     <script>
         // ========== CONFIGURACIÓN DE FIREBASE ==========
-        // Tus credenciales exactas de Firebase
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDC9xFg5QypLX-ZnXBN55FmME39Lot9hLY",
-  authDomain: "medicalbuy-db.firebaseapp.com",
-  databaseURL: "https://medicalbuy-db-default-rtdb.firebaseio.com",
-  projectId: "medicalbuy-db",
-  storageBucket: "medicalbuy-db.firebasestorage.app",
-  messagingSenderId: "269696757008",
-  appId: "1:269696757008:web:9b74ecbed3f0e315e0c995",
-  measurementId: "G-664NJ16CLN"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyDC9xFg5QyPLX-ZnXBN55FmME39Lot9hLY",
+            authDomain: "medicalbuy-db.firebaseapp.com",
+            databaseURL: "https://medicalbuy-db-default-rtdb.firebaseio.com",
+            projectId: "medicalbuy-db",
+            storageBucket: "medicalbuy-db.firebasestorage.app",
+            messagingSenderId: "269696757008",
+            appId: "1:269696757008:web:9b74cebed3f0e315e0c995",
+            measurementId: "G-664NJ16CLN"
+        };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-        // ========== ELEMENTOS DEL DOM ==========
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        // ========== ELEMENTOS DOM ==========
         const loginContainer = document.getElementById('loginContainer');
         const adminContainer = document.getElementById('adminContainer');
         const btnLogin = document.getElementById('btnLogin');
@@ -363,13 +263,12 @@ const analytics = getAnalytics(app);
 
         // ========== VERIFICAR ESTADO DE AUTENTICACIÓN ==========
         auth.onAuthStateChanged(user => {
+            console.log('Estado de autenticación:', user ? 'Usuario logueado' : 'No logueado');
             if (user) {
-                // Usuario autenticado
                 loginContainer.style.display = 'none';
                 adminContainer.style.display = 'block';
                 cargarProductos();
             } else {
-                // No autenticado
                 loginContainer.style.display = 'block';
                 adminContainer.style.display = 'none';
             }
@@ -380,13 +279,14 @@ const analytics = getAnalytics(app);
             const emailVal = email.value.trim();
             const passVal = password.value.trim();
             
-            if (!emailVal || !passVal) {
-                loginError.textContent = 'Por favor ingresa email y contraseña';
-                return;
-            }
+            console.log('Intentando login con:', emailVal);
             
             auth.signInWithEmailAndPassword(emailVal, passVal)
+                .then(userCredential => {
+                    console.log('Login exitoso:', userCredential.user.email);
+                })
                 .catch(error => {
+                    console.error('Error de login:', error.code, error.message);
                     loginError.textContent = 'Error: ' + error.message;
                 });
         });
@@ -396,20 +296,23 @@ const analytics = getAnalytics(app);
             auth.signOut();
         });
 
-        // ========== CARGAR PRODUCTOS DESDE FIREBASE ==========
+        // ========== CARGAR PRODUCTOS ==========
         function cargarProductos() {
             const productosRef = database.ref('productos');
             
             productosRef.on('value', (snapshot) => {
                 const productos = snapshot.val();
-                mostrarProductosEnTabla(productos);
+                mostrarProductos(productos);
+            }, error => {
+                console.error('Error cargando productos:', error);
+                productosBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: red;">Error cargando productos</td></tr>';
             });
         }
 
-        // ========== MOSTRAR PRODUCTOS EN TABLA ==========
-        function mostrarProductosEnTabla(productos) {
+        // ========== MOSTRAR PRODUCTOS ==========
+        function mostrarProductos(productos) {
             if (!productos) {
-                productosBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No hay productos. Agrega uno nuevo.</td></tr>';
+                productosBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No hay productos. Agrega uno nuevo.</td></tr>';
                 return;
             }
             
@@ -421,16 +324,12 @@ const analytics = getAnalytics(app);
                     <tr>
                         <td><img src="${p.imagen}" class="producto-imagen" onerror="this.src='https://placehold.co/100x100/dfeef8/3b7e9c?text=IMG'"></td>
                         <td>${p.categoria}</td>
-                        <td><strong>${p.producto}</strong></td>
-                        <td>$${p.precio.toLocaleString('es-AR')}</td>
+                        <td>${p.producto}</td>
+                        <td>$${p.precio.toLocaleString()}</td>
                         <td>${p.stock}</td>
                         <td>
-                            <button class="btn-small btn-edit" onclick="editarProducto('${key}')">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-small btn-delete" onclick="eliminarProducto('${key}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            <button class="btn-small btn-edit" onclick="editarProducto('${key}')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-small btn-delete" onclick="eliminarProducto('${key}')"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
@@ -444,92 +343,60 @@ const analytics = getAnalytics(app);
             e.preventDefault();
             
             const productoData = {
-                categoria: categoria.value.trim().toUpperCase(),
-                producto: producto.value.trim(),
+                categoria: categoria.value,
+                producto: producto.value,
                 precio: parseFloat(precio.value),
                 stock: parseInt(stock.value),
-                imagen: imagen.value.trim(),
-                unidad: unidad.value.trim(),
+                imagen: imagen.value,
+                unidad: unidad.value,
                 icono: icono.value
             };
             
-            // Validaciones básicas
-            if (isNaN(productoData.precio) || productoData.precio <= 0) {
-                alert('El precio debe ser un número positivo');
-                return;
-            }
-            
-            if (isNaN(productoData.stock) || productoData.stock < 0) {
-                alert('El stock debe ser un número válido');
-                return;
-            }
-            
             const key = editKey.value;
-            const productosRef = database.ref('productos');
             
             if (key) {
-                // Actualizar producto existente
-                productosRef.child(key).set(productoData)
+                database.ref('productos/' + key).set(productoData)
                     .then(() => {
-                        alert('Producto actualizado correctamente');
+                        alert('Producto actualizado');
                         productForm.reset();
                         editKey.value = '';
-                        unidad.value = 'unidad'; // valor por defecto
-                    })
-                    .catch(error => alert('Error: ' + error.message));
+                    });
             } else {
-                // Nuevo producto
-                productosRef.push(productoData)
+                database.ref('productos').push(productoData)
                     .then(() => {
-                        alert('Producto agregado correctamente');
+                        alert('Producto agregado');
                         productForm.reset();
-                        unidad.value = 'unidad';
-                    })
-                    .catch(error => alert('Error: ' + error.message));
+                    });
             }
         });
 
         // ========== EDITAR PRODUCTO ==========
         window.editarProducto = (key) => {
-            const productosRef = database.ref('productos/' + key);
-            productosRef.once('value', (snapshot) => {
+            database.ref('productos/' + key).once('value', (snapshot) => {
                 const p = snapshot.val();
-                
-                categoria.value = p.categoria || '';
-                producto.value = p.producto || '';
-                precio.value = p.precio || '';
-                stock.value = p.stock || '';
-                imagen.value = p.imagen || '';
-                unidad.value = p.unidad || 'unidad';
-                icono.value = p.icono || 'fa-hand-holding-heart';
+                categoria.value = p.categoria;
+                producto.value = p.producto;
+                precio.value = p.precio;
+                stock.value = p.stock;
+                imagen.value = p.imagen;
+                unidad.value = p.unidad;
+                icono.value = p.icono;
                 editKey.value = key;
-                
-                // Scroll al formulario
-                document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' });
             });
         };
 
         // ========== ELIMINAR PRODUCTO ==========
         window.eliminarProducto = (key) => {
-            if (confirm('¿Estás seguro de eliminar este producto?')) {
+            if (confirm('¿Eliminar producto?')) {
                 database.ref('productos/' + key).remove()
-                    .then(() => alert('Producto eliminado'))
-                    .catch(error => alert('Error: ' + error.message));
+                    .then(() => alert('Producto eliminado'));
             }
         };
 
-        // ========== CANCELAR EDICIÓN ==========
+        // ========== CANCELAR ==========
         btnCancel.addEventListener('click', () => {
             productForm.reset();
             editKey.value = '';
-            unidad.value = 'unidad';
-        });
-
-        // ========== PERMITIR ENTER PARA LOGIN ==========
-        password.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                btnLogin.click();
-            }
         });
     </script>
 </body>
