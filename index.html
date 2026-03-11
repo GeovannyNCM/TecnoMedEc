@@ -398,20 +398,21 @@
 
 <script>
     // ========== CONFIGURACIÓN DE FIREBASE ==========
-    const firebaseConfig = {
-        apiKey: "AIzaSyDC9xFg5QyPLX-ZnXBN55FmME39Lot9hLY",
-        authDomain: "medicalbuy-db.firebaseapp.com",
-        databaseURL: "https://medicalbuy-db-default-rtdb.firebaseio.com",
-        projectId: "medicalbuy-db",
-        storageBucket: "medicalbuy-db.firebasestorage.app",
-        messagingSenderId: "269696757008",
-        appId: "1:269696757008:web:9b74cebed3f0e315e0c995",
-        measurementId: "G-664NJ16CLN"
-    };
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDC9xFg5QypLX-ZnXBN55FmME39Lot9hLY",
+  authDomain: "medicalbuy-db.firebaseapp.com",
+  databaseURL: "https://medicalbuy-db-default-rtdb.firebaseio.com",
+  projectId: "medicalbuy-db",
+  storageBucket: "medicalbuy-db.firebasestorage.app",
+  messagingSenderId: "269696757008",
+  appId: "1:269696757008:web:9b74ecbed3f0e315e0c995",
+  measurementId: "G-664NJ16CLN"
+};
 
-    // Inicializar Firebase
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
     // ========== CONFIGURACIÓN ==========
     const WHATSAPP_NUMBER = "593986501112"; // CAMBIA POR TU NÚMERO
