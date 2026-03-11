@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedicalBuy · Admin Firebase</title>
+    <title>TecnoMed · Admin Firebase</title>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -157,7 +157,7 @@
     <!-- Panel de Administración -->
     <div id="adminContainer" class="container" style="display: none;">
         <div class="admin-header">
-            <h2><i class="fas fa-user-shield"></i> Panel Admin - Firebase</h2>
+            <h2><i class="fas fa-user-shield"></i> Panel Admin - TecnoMed</h2>
             <button class="btn btn-danger" id="btnLogout" style="width: auto;">
                 <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
             </button>
@@ -170,7 +170,18 @@
                 <input type="hidden" id="editKey" value="">
                 
                 <div class="form-row">
-                    <input type="text" id="categoria" class="form-control" placeholder="Categoría" required>
+                    <select id="categoria" class="form-control" required>
+                        <option value="">Seleccionar categoría</option>
+                        <option value="CUIDADOS">CUIDADOS</option>
+                        <option value="DIAGNÓSTICOS">DIAGNÓSTICOS</option>
+                        <option value="EMERGENCIA">EMERGENCIA</option>
+                        <option value="EQUIPOS">EQUIPOS</option>
+                        <option value="INSTRUMENTAL">INSTRUMENTAL</option>
+                        <option value="INSUMOS">INSUMOS</option>
+                        <option value="MOBILIARIO">MOBILIARIO</option>
+                        <option value="INDUMENTARIA">INDUMENTARIA</option>
+                        <option value="OXIGENOTERAPIA">OXIGENOTERAPIA</option>
+                    </select>
                     <input type="text" id="producto" class="form-control" placeholder="Nombre del producto" required>
                 </div>
                 
@@ -190,6 +201,11 @@
                         <option value="fa-stethoscope">Diagnóstico</option>
                         <option value="fa-truck-medical">Emergencia</option>
                         <option value="fa-lungs">Equipos</option>
+                        <option value="fa-scalpel">Instrumental</option>
+                        <option value="fa-syringe">Insumos</option>
+                        <option value="fa-couch">Mobiliario</option>
+                        <option value="fa-tshirt">Indumentaria</option>
+                        <option value="fa-wind">Oxigenoterapia</option>
                     </select>
                 </div>
                 
@@ -224,20 +240,21 @@
     <script>
         // ========== CONFIGURACIÓN DE FIREBASE ==========
         const firebaseConfig = {
-  apiKey: "AIzaSyDC9xFg5QypLX-ZnXBN55FmME39Lot9hLY",
-  authDomain: "medicalbuy-db.firebaseapp.com",
-  databaseURL: "https://medicalbuy-db-default-rtdb.firebaseio.com",
-  projectId: "medicalbuy-db",
-  storageBucket: "medicalbuy-db.firebasestorage.app",
-  messagingSenderId: "269696757008",
-  appId: "1:269696757008:web:9b74ecbed3f0e315e0c995",
-  measurementId: "G-664NJ16CLN"
-};
+            apiKey: "AIzaSyDC9xFg5QypLX-ZnXBN55FmME39Lot9hLY",
+            authDomain: "medicalbuy-db.firebaseapp.com",
+            databaseURL: "https://medicalbuy-db-default-rtdb.firebaseio.com",
+            projectId: "medicalbuy-db",
+            storageBucket: "medicalbuy-db.firebasestorage.app",
+            messagingSenderId: "269696757008",
+            appId: "1:269696757008:web:9b74ecbed3f0e315e0c995",
+            measurementId: "G-664NJ16CLN"
+        };
 
-// Inicializar Firebase (versión compat)
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-const auth = firebase.auth();
+        // Inicializar Firebase (versión compat)
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+        
         // ========== ELEMENTOS DOM ==========
         const loginContainer = document.getElementById('loginContainer');
         const adminContainer = document.getElementById('adminContainer');
