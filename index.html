@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedicalBuy · Admin</title>
+    <title>TecnoMed · Tienda</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ========== ESTILOS ADMIN COMPACTOS ========== */
+        /* ========== ESTILOS COMPACTOS ========== */
         * {
             margin: 0;
             padding: 0;
@@ -16,565 +16,722 @@
         }
 
         body {
-            background: #eef3f8;
+            background: #f5fafd;
             padding: 1rem;
-            color: #153e4d;
+            color: #1a2e3f;
         }
 
-        .admin-container {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
         }
 
         /* Header compacto */
-        .admin-header {
-            background: white;
-            border-radius: 30px;
-            padding: 0.8rem 1.5rem;
-            margin-bottom: 1.5rem;
+        .header-compacto {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid #cde3f0;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #e0eef9;
         }
 
-        .admin-header h1 {
-            font-size: 1.3rem;
+        .logo-area {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .admin-header h1 i {
-            background: #1f7a8c;
-            color: white;
+        .logo-area i {
+            font-size: 1.5rem;
+            color: #1d7a8f;
+            background: #e3f2f9;
             padding: 0.4rem;
             border-radius: 50%;
-            font-size: 1rem;
         }
 
-        .tienda-link {
+        .logo-area h1 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Botón admin pequeño */
+        .btn-admin-pequeno {
             background: #f0f7fc;
-            color: #1f7a8c;
+            color: #2c5f70;
+            border: 1px solid #c2ddee;
             padding: 0.3rem 1rem;
             border-radius: 30px;
-            text-decoration: none;
             font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            border: 1px solid #c2ddee;
-        }
-
-        /* Panel grid más compacto */
-        .admin-panels {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 1rem;
-            align-items: start;
-        }
-
-        /* Formulario compacto */
-        .form-card {
-            background: white;
-            border-radius: 25px;
-            padding: 1.2rem;
-            border: 1px solid #cde0ec;
-            position: sticky;
-            top: 1rem;
-        }
-
-        .form-card h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 6px;
+            cursor: pointer;
+            transition: 0.1s;
+            text-decoration: none;
         }
 
-        .form-group {
-            margin-bottom: 0.8rem;
+        .btn-admin-pequeno:hover {
+            background: #e1f0fa;
         }
 
-        .form-group label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 0.2rem;
-        }
-
-        .form-group label i {
-            margin-right: 4px;
-            font-size: 0.8rem;
-        }
-
-        .form-control {
+        /* Modal de login */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 0.5rem 1rem;
-            border: 1px solid #d0e5f2;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(3px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-login {
+            background: white;
+            padding: 2rem;
             border-radius: 30px;
-            font-size: 0.85rem;
+            width: 320px;
+            box-shadow: 0 20px 40px rgba(0,50,70,0.2);
+            border: 1px solid #bddcee;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
+        .modal-login h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #0d4151;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn-admin {
+        .modal-login input {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1rem;
+            border: 2px solid #d9eaf5;
+            border-radius: 40px;
+            font-size: 0.9rem;
+        }
+
+        .modal-login input:focus {
+            outline: none;
+            border-color: #1f7a8c;
+        }
+
+        .modal-botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.2rem;
+        }
+
+        .btn-modal {
+            flex: 1;
+            padding: 0.7rem;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-ingresar {
             background: #1f7a8c;
             color: white;
+        }
+
+        .btn-cerrar {
+            background: #e2edf5;
+            color: #2c5f70;
+        }
+
+        /* Filtros compactos */
+        .filtros-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 1rem 0 1.2rem;
+            background: white;
+            padding: 0.8rem 1rem;
+            border-radius: 40px;
+            border: 1px solid #d2e6f2;
+        }
+
+        .btn-categoria {
+            background: transparent;
             border: none;
-            padding: 0.7rem;
+            padding: 0.4rem 1rem;
             border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1d5a6e;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid transparent;
+        }
+
+        .btn-categoria:hover {
+            background: #e1f2fa;
+        }
+
+        .btn-categoria.activo {
+            background: #1f7a8c;
+            color: white;
+        }
+
+        .btn-categoria.activo i {
+            color: white;
+        }
+
+        .btn-categoria i {
+            font-size: 0.8rem;
+            color: #1f7a8c;
+        }
+
+        /* Grid de productos */
+        .categorias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Clase para ocultar productos (FILTRO) */
+        .hidden-category {
+            display: none !important;
+        }
+
+        /* Tarjetas de producto */
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,40,60,0.05);
+            overflow: hidden;
+            border: 1px solid #d4e6f0;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(13, 87, 107, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .img-container {
+            width: 100%;
+            height: 120px;
+            background: #eaf3f9;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            cursor: pointer;
+            overflow: hidden;
+            border-bottom: 2px solid #e0eef9;
+            position: relative;
+        }
+
+        .img-container img {
             width: 100%;
-            margin-top: 0.5rem;
-        }
-
-        .btn-secondary {
-            background: #e1f0f7;
-            color: #145d70;
-        }
-
-        /* Lista de productos compacta */
-        .productos-list {
-            background: white;
-            border-radius: 25px;
-            padding: 1.2rem;
-            border: 1px solid #cde0ec;
-        }
-
-        .list-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .list-header h2 {
-            font-size: 1.2rem;
-        }
-
-        .total-stock {
-            background: #def0f8;
-            padding: 0.2rem 1rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-        }
-
-        th {
-            background: #e5f3fb;
-            padding: 0.6rem;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 0.6rem;
-            border-bottom: 1px solid #e2f0f8;
-        }
-
-        .producto-imagen-td img {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            height: 100%;
             object-fit: cover;
         }
 
-        .acciones-td {
+        .cat-icon-overlay {
+            position: absolute;
+            top: 6px;
+            left: 8px;
+            background: rgba(255,255,255,0.95);
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #0c5466;
+            border: 1px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             display: flex;
-            gap: 0.3rem;
-        }
-
-        .btn-accion {
-            background: transparent;
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 0.3rem;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            gap: 4px;
         }
 
-        .btn-editar {
-            color: #1c6b8c;
-            background: #e1f2fe;
-        }
-
-        .btn-eliminar {
-            color: #b13e3e;
-            background: #ffe2e2;
-        }
-
-        .badge-cat {
-            background: #cbe5f0;
-            padding: 0.2rem 0.6rem;
-            border-radius: 30px;
+        .cat-icon-overlay i {
             font-size: 0.7rem;
-            white-space: nowrap;
+            color: #1f7a8c;
         }
 
-        .stock-badge {
-            padding: 0.2rem 0.6rem;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            background: #dcf5e5;
-            color: #196f45;
+        .card-content {
+            padding: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .stock-badge.agotado {
-            background: #fbe5e5;
-            color: #ac3939;
+        .nombre-producto {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #103542;
+            line-height: 1.3;
+            height: 2.5rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
 
-        .footer-admin {
-            margin-top: 1.5rem;
-            background: #cbe2ef;
-            border-radius: 30px;
-            padding: 0.8rem 1.2rem;
+        .precio-stock-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: #f0f7fc;
+            border-radius: 30px;
+            padding: 0.3rem 0.6rem;
             font-size: 0.8rem;
         }
 
-        .btn-descarga {
+        .precio {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #166b7c;
+        }
+
+        .precio small {
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: #4f7b8f;
+        }
+
+        .stock-indicator {
+            display: flex;
+            align-items: center;
+            gap: 3px;
             background: white;
-            border: 1px solid #1f7a8c;
-            color: #1f7a8c;
-            padding: 0.3rem 1rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .stock-indicator.disponible {
+            color: #1c7242;
+            background: #e2ffee;
+        }
+
+        .stock-indicator.agotado {
+            color: #b13e3e;
+            background: #ffe9e9;
+        }
+
+        .control-cantidad {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border: 1px solid #d0e2f0;
+            border-radius: 30px;
+            padding: 0.1rem 0.1rem 0.1rem 0.8rem;
+        }
+
+        .control-cantidad label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #1b4e5d;
+        }
+
+        .control-cantidad input {
+            width: 50px;
+            border: none;
+            background: #eef7fd;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 0.3rem 0;
+            border-radius: 30px;
+            outline: none;
+        }
+
+        .control-cantidad input:focus {
+            background: #e3f0fa;
+        }
+
+        .btn-wsp {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 0.5rem;
             border-radius: 30px;
             font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
             cursor: pointer;
+            margin-top: 0.2rem;
+            transition: background 0.2s;
+        }
+
+        .btn-wsp:hover:not(.disabled-btn) {
+            background: #1fab5a;
+        }
+
+        .btn-wsp i {
+            font-size: 1rem;
+        }
+
+        .disabled-btn {
+            opacity: 0.4;
+            pointer-events: none;
+            background: #98aebb;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #5f7e8f;
+            text-align: center;
+        }
+
+        .contador-productos {
+            font-size: 0.8rem;
+            color: #1f7a8c;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
-<div class="admin-container">
-    <!-- Header compacto -->
-    <div class="admin-header">
-        <h1>
-            <i class="fas fa-user-shield"></i> 
-            Panel Admin
-        </h1>
-        <a href="index.html" class="tienda-link" target="_blank">
-            <i class="fas fa-store"></i> Ver Tienda
-        </a>
+<div class="container">
+    <!-- Header compacto con botón admin -->
+    <div class="header-compacto">
+        <div class="logo-area">
+            <i class="fas fa-briefcase-medical"></i>
+            <h1>TecnoMed</h1>
+        </div>
+        <button class="btn-admin-pequeno" id="btnAbrirLogin">
+            <i class="fas fa-user-shield"></i> Admin
+        </button>
     </div>
 
-    <!-- Panel principal compacto -->
-    <div class="admin-panels">
-        <!-- Formulario compacto -->
-        <div class="form-card">
-            <h2><i class="fas fa-plus-circle"></i> <span id="formTitle">Nuevo producto</span></h2>
-            
-            <form id="productoForm">
-                <input type="hidden" id="editIndex" value="-1">
-
-                <div class="form-group">
-                    <label><i class="fas fa-tag"></i> Categoría</label>
-                    <select id="categoria" class="form-control" required>
-                        <option value="" disabled selected>-- Seleccionar --</option>
-                        <option value="CUIDADOS">CUIDADOS</option>
-                        <option value="DIAGNÓSTICO">DIAGNÓSTICO</option>
-                        <option value="EMERGENCIA">EMERGENCIA</option>
-                        <option value="EQUIPOS">EQUIPOS</option>
-                        <option value="INSTRUMENTAL">INSTRUMENTAL</option>
-                        <option value="INSUMOS">INSUMOS</option>
-                        <option value="MOBILIARIO">MOBILIARIO</option>
-                        <option value="INDUMENTARIA">INDUMENTARIA</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label><i class="fas fa-cube"></i> Producto</label>
-                    <input type="text" id="nombre" class="form-control" required>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label><i class="fas fa-dollar-sign"></i> Precio</label>
-                        <input type="number" id="precio" class="form-control" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-boxes"></i> Stock</label>
-                        <input type="number" id="stock" class="form-control" min="0" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label><i class="fas fa-image"></i> URL Imagen</label>
-                    <input type="url" id="imagen" class="form-control" required>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label><i class="fas fa-balance-scale"></i> Unidad</label>
-                        <input type="text" id="unidad" class="form-control" value="unidad" required>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-icons"></i> Icono</label>
-                        <select id="icono" class="form-control" required>
-                            <option value="fa-hand-holding-heart">Cuidados</option>
-                            <option value="fa-stethoscope">Diagnóstico</option>
-                            <option value="fa-truck-medical">Emergencia</option>
-                            <option value="fa-lungs">Equipos</option>
-                            <option value="fa-scalpel">Instrumental</option>
-                            <option value="fa-syringe">Insumos</option>
-                            <option value="fa-couch">Mobiliario</option>
-                            <option value="fa-tshirt">Indumentaria</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-admin" id="btnSubmit">
-                    <i class="fas fa-save"></i> Guardar
-                </button>
-                <button type="button" class="btn-admin btn-secondary" id="btnCancelar" style="display: none;">
-                    <i class="fas fa-times"></i> Cancelar
-                </button>
-            </form>
-        </div>
-
-        <!-- Lista de productos compacta -->
-        <div class="productos-list">
-            <div class="list-header">
-                <h2><i class="fas fa-list"></i> Productos</h2>
-                <span class="total-stock" id="totalProductos">0</span>
-            </div>
-            
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Img</th>
-                            <th>Categoría</th>
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th>Stock</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="productosTbody">
-                        <tr><td colspan="6" style="text-align: center;">Cargando...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                <button class="btn-descarga" id="cargarEjemplo"><i class="fas fa-flask"></i> Ejemplos</button>
-                <button class="btn-descarga" id="exportarJSON"><i class="fas fa-download"></i> Exportar</button>
-                <button class="btn-descarga" id="importarJSON"><i class="fas fa-upload"></i> Importar</button>
-            </div>
+<!-- Modal de Login - SIN VALORES POR DEFECTO -->
+<div class="modal-overlay" id="modalLogin">
+    <div class="modal-login">
+        <h3><i class="fas fa-lock"></i> Acceso Admin</h3>
+        <input type="text" id="username" placeholder="Usuario" value="">
+        <input type="password" id="password" placeholder="Contraseña" value="">
+        <div class="modal-botones">
+            <button class="btn-modal btn-ingresar" id="btnIngresar">Ingresar</button>
+            <button class="btn-modal btn-cerrar" id="btnCerrarModal">Cancelar</button>
         </div>
     </div>
+</div> 
 
-    <!-- Footer compacto -->
-    <div class="footer-admin">
-        <span><i class="fas fa-shield-alt"></i> Auto-guardado</span>
-        <span><i class="fas fa-sync-alt"></i> Sincronizado con tienda</span>
+    <!-- Filtros de categoría -->
+    <div class="filtros-container" id="filtrosCategorias">
+        <!-- Los botones se generan con JS -->
+    </div>
+    
+    <!-- Contador de productos visibles -->
+    <div class="contador-productos" id="contadorProductos">Mostrando todos los productos</div>
+    
+    <!-- Grid de productos -->
+    <div class="categorias-grid" id="appGrid"></div>
+
+    <div class="footer-note">
+        <i class="fas fa-sync-alt"></i> Sincronizado con panel admin
     </div>
 </div>
 
 <script>
     (function() {
+        // ========== CONFIGURACIÓN ==========
         const STORAGE_KEY = 'productos_medicos_admin';
+        const WHATSAPP_NUMBER = "593996234944"; // CAMBIAR POR TU NÚMERO
+        const ADMIN_USER = "Admin";
+        const ADMIN_PASS = "AdminTecno";
         
-        // Productos ejemplo compactos
-        const productosEjemplo = [
-            { categoria: "CUIDADOS", icono: "fa-hand-holding-heart", producto: "Crema Barrera Zinco", precio: 12450, stock: 8, unidad: "pote", imagen: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80" },
-            { categoria: "DIAGNÓSTICO", icono: "fa-stethoscope", producto: "Estetoscopio", precio: 38900, stock: 5, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=400&q=80" },
-            { categoria: "EMERGENCIA", icono: "fa-truck-medical", producto: "Camilla Plegable", precio: 184500, stock: 2, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1582719508461-905c6734fd2e?w=400&q=80" }
+        // ========== ELEMENTOS DOM ==========
+        const modal = document.getElementById('modalLogin');
+        const btnAbrirLogin = document.getElementById('btnAbrirLogin');
+        const btnCerrarModal = document.getElementById('btnCerrarModal');
+        const btnIngresar = document.getElementById('btnIngresar');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const grid = document.getElementById('appGrid');
+        const filtrosDiv = document.getElementById('filtrosCategorias');
+        const contadorSpan = document.getElementById('contadorProductos');
+        
+        // ========== VARIABLES GLOBALES ==========
+        let productos = [];
+        let categoriaActiva = 'todas'; // 'todas' o nombre de categoría
+
+        // ========== PRODUCTOS DE RESPALDO ==========
+        const productosRespaldo = [
+            { categoria: "CUIDADOS", icono: "fa-hand-holding-heart", producto: "Crema Barrera Zinco 250g", precio: 12450, stock: 8, unidad: "pote", imagen: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&q=80" },
+            { categoria: "CUIDADOS", icono: "fa-hand-holding-heart", producto: "Apósitos estériles 10x10", precio: 3200, stock: 15, unidad: "caja", imagen: "https://images.unsplash.com/photo-1584308972272-9e4e7685e80f?w=400&q=80" },
+            { categoria: "DIAGNÓSTICO", icono: "fa-stethoscope", producto: "Estetoscopio Profesional", precio: 38900, stock: 5, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=400&q=80" },
+            { categoria: "DIAGNÓSTICO", icono: "fa-stethoscope", producto: "Esfigmomanómetro", precio: 25750, stock: 7, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=400&q=80" },
+            { categoria: "EMERGENCIA", icono: "fa-truck-medical", producto: "Camilla Plegable", precio: 184500, stock: 2, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1582719508461-905c6734fd2e?w=400&q=80" },
+            { categoria: "EMERGENCIA", icono: "fa-truck-medical", producto: "Botiquín Maletín", precio: 22400, stock: 9, unidad: "equipo", imagen: "https://images.unsplash.com/photo-1582719508461-905c6734fd2e?w=400&q=80" },
+            { categoria: "EQUIPOS", icono: "fa-lungs", producto: "Concentrador Oxígeno 5L", precio: 625000, stock: 3, unidad: "equipo", imagen: "https://images.unsplash.com/photo-1582719508461-905c6734fd2e?w=400&q=80" },
+            { categoria: "EQUIPOS", icono: "fa-lungs", producto: "Nebulizador Compresor", precio: 38700, stock: 11, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1582719508461-905c6734fd2e?w=400&q=80" },
+            { categoria: "INSTRUMENTAL", icono: "fa-scalpel", producto: "Kit Cirugía Menor", precio: 35750, stock: 12, unidad: "kit", imagen: "https://images.unsplash.com/photo-1581595220892-b8c465b1a3d4?w=400&q=80" },
+            { categoria: "INSTRUMENTAL", icono: "fa-scalpel", producto: "Pinzas Kelly", precio: 8900, stock: 23, unidad: "par", imagen: "https://images.unsplash.com/photo-1581595220892-b8c465b1a3d4?w=400&q=80" },
+            { categoria: "INSUMOS", icono: "fa-syringe", producto: "Jeringas 10ml x100", precio: 18990, stock: 25, unidad: "caja", imagen: "https://images.unsplash.com/photo-1584308972272-9e4e7685e80f?w=400&q=80" },
+            { categoria: "INSUMOS", icono: "fa-syringe", producto: "Gasas Estériles x500", precio: 15300, stock: 32, unidad: "paquete", imagen: "https://images.unsplash.com/photo-1584308972272-9e4e7685e80f?w=400&q=80" },
+            { categoria: "MOBILIARIO", icono: "fa-couch", producto: "Sillón de Exploración", precio: 312000, stock: 0, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=400&q=80" },
+            { categoria: "MOBILIARIO", icono: "fa-couch", producto: "Carro de Paro", precio: 189000, stock: 4, unidad: "unidad", imagen: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=400&q=80" },
+            { categoria: "INDUMENTARIA", icono: "fa-tshirt", producto: "Camisolín x10", precio: 8450, stock: 40, unidad: "paquete", imagen: "https://images.unsplash.com/photo-1581595220892-b8c465b1a3d4?w=400&q=80" },
+            { categoria: "INDUMENTARIA", icono: "fa-tshirt", producto: "Gorro Quirúrgico x50", precio: 6200, stock: 17, unidad: "bolsa", imagen: "https://images.unsplash.com/photo-1581595220892-b8c465b1a3d4?w=400&q=80" }
         ];
 
-        let productos = [];
+        // ========== FUNCIONES DE LOGIN ==========
+        btnAbrirLogin.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
         
-        // Elementos DOM
-        const tbody = document.getElementById('productosTbody');
-        const totalSpan = document.getElementById('totalProductos');
-        const form = document.getElementById('productoForm');
-        const editIndex = document.getElementById('editIndex');
-        const formTitle = document.getElementById('formTitle');
-        const btnCancelar = document.getElementById('btnCancelar');
+        btnCerrarModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
         
-        // Campos
-        const campos = {
-            categoria: document.getElementById('categoria'),
-            nombre: document.getElementById('nombre'),
-            precio: document.getElementById('precio'),
-            stock: document.getElementById('stock'),
-            imagen: document.getElementById('imagen'),
-            unidad: document.getElementById('unidad'),
-            icono: document.getElementById('icono')
-        };
+        btnIngresar.addEventListener('click', () => {
+            if (username.value === ADMIN_USER && password.value === ADMIN_PASS) {
+                modal.style.display = 'none';
+                window.open('admin.html', '_blank');
+            } else {
+                alert('Usuario o contraseña incorrectos');
+            }
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
 
-        // Cargar productos
-        function cargarStorage() {
+        // ========== CARGAR PRODUCTOS ==========
+        function cargarProductos() {
             try {
                 const stored = localStorage.getItem(STORAGE_KEY);
-                productos = stored ? JSON.parse(stored) : [...productosEjemplo];
-            } catch {
-                productos = [...productosEjemplo];
+                if (stored) {
+                    productos = JSON.parse(stored);
+                    console.log('Productos cargados desde admin:', productos.length);
+                } else {
+                    productos = [...productosRespaldo];
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(productos));
+                    console.log('Productos de respaldo cargados');
+                }
+            } catch (error) {
+                console.error('Error cargando productos:', error);
+                productos = [...productosRespaldo];
             }
-            guardarStorage();
-            actualizarTabla();
+            
+            renderizarFiltros();
+            renderizarTarjetas();
         }
 
-        function guardarStorage() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(productos));
-        }
-
-        // Actualizar tabla compacta
-        function actualizarTabla() {
-            if (productos.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center;">Sin productos</td></tr>`;
-                totalSpan.innerText = '0';
-                return;
-            }
-
-            let html = '';
-            productos.forEach((prod, idx) => {
-                const stockClass = prod.stock > 0 ? '' : 'agotado';
-                const stockText = prod.stock > 0 ? prod.stock : 'SIN';
-                
-                html += `<tr>
-                    <td class="producto-imagen-td"><img src="${prod.imagen}" onerror="this.src='https://placehold.co/100x100/dfeef8/3b7e9c?text=IMG'"></td>
-                    <td><span class="badge-cat"><i class="fas ${prod.icono || 'fa-tag'}"></i> ${prod.categoria}</span></td>
-                    <td><strong>${prod.producto}</strong></td>
-                    <td>$${prod.precio.toLocaleString()}</td>
-                    <td><span class="stock-badge ${stockClass}">${stockText}</span></td>
-                    <td class="acciones-td">
-                        <button class="btn-accion btn-editar" onclick="editarProducto(${idx})"><i class="fas fa-edit"></i></button>
-                        <button class="btn-accion btn-eliminar" onclick="eliminarProducto(${idx})"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>`;
+        // ========== RENDERIZAR FILTROS ==========
+        function renderizarFiltros() {
+            const categorias = [...new Set(productos.map(p => p.categoria))].sort();
+            
+            let html = `
+                <button class="btn-categoria ${categoriaActiva === 'todas' ? 'activo' : ''}" data-categoria="todas">
+                    <i class="fas fa-border-all"></i> Todos
+                </button>
+            `;
+            
+            categorias.forEach(cat => {
+                const prodEjemplo = productos.find(p => p.categoria === cat);
+                const icono = prodEjemplo?.icono || 'fa-tag';
+                html += `
+                    <button class="btn-categoria ${categoriaActiva === cat ? 'activo' : ''}" data-categoria="${cat}">
+                        <i class="fas ${icono}"></i> ${cat}
+                    </button>
+                `;
             });
             
-            tbody.innerHTML = html;
-            totalSpan.innerText = productos.length;
+            filtrosDiv.innerHTML = html;
+            
+            // Agregar eventos a los botones de filtro
+            document.querySelectorAll('.btn-categoria').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const categoria = this.dataset.categoria;
+                    categoriaActiva = categoria;
+                    
+                    // Actualizar clase activa
+                    document.querySelectorAll('.btn-categoria').forEach(b => b.classList.remove('activo'));
+                    this.classList.add('activo');
+                    
+                    // Aplicar filtro
+                    aplicarFiltro();
+                });
+            });
         }
 
-        // Funciones globales
-        window.editarProducto = function(index) {
-            const prod = productos[index];
-            campos.categoria.value = prod.categoria;
-            campos.nombre.value = prod.producto;
-            campos.precio.value = prod.precio;
-            campos.stock.value = prod.stock;
-            campos.imagen.value = prod.imagen;
-            campos.unidad.value = prod.unidad || 'unidad';
-            campos.icono.value = prod.icono || 'fa-box';
+        // ========== APLICAR FILTRO ==========
+        function aplicarFiltro() {
+            const tarjetas = document.querySelectorAll('.card');
+            let productosVisibles = 0;
             
-            editIndex.value = index;
-            formTitle.innerText = 'Editar';
-            btnCancelar.style.display = 'block';
-        };
-
-        window.eliminarProducto = function(index) {
-            if (confirm('¿Eliminar?')) {
-                productos.splice(index, 1);
-                guardarStorage();
-                actualizarTabla();
-                if (parseInt(editIndex.value) === index) cancelarEdicion();
-            }
-        };
-
-        function cancelarEdicion() {
-            form.reset();
-            editIndex.value = '-1';
-            formTitle.innerText = 'Nuevo producto';
-            btnCancelar.style.display = 'none';
-            campos.unidad.value = 'unidad';
-        }
-
-        // Evento submit
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+            tarjetas.forEach(card => {
+                const catCard = card.dataset.categoria;
+                
+                if (categoriaActiva === 'todas' || catCard === categoriaActiva) {
+                    card.classList.remove('hidden-category');
+                    productosVisibles++;
+                } else {
+                    card.classList.add('hidden-category');
+                }
+            });
             
-            const nuevoProducto = {
-                categoria: campos.categoria.value,
-                producto: campos.nombre.value.trim(),
-                precio: parseFloat(campos.precio.value),
-                stock: parseInt(campos.stock.value),
-                imagen: campos.imagen.value.trim(),
-                unidad: campos.unidad.value.trim(),
-                icono: campos.icono.value,
-            };
-
-            const indexEdit = parseInt(editIndex.value);
-            if (indexEdit >= 0) {
-                productos[indexEdit] = nuevoProducto;
+            // Actualizar contador
+            if (categoriaActiva === 'todas') {
+                contadorSpan.textContent = `Mostrando todos los productos (${productosVisibles})`;
             } else {
-                productos.push(nuevoProducto);
+                contadorSpan.textContent = `Mostrando ${categoriaActiva}: ${productosVisibles} productos`;
+            }
+        }
+
+        // ========== RENDERIZAR TARJETAS ==========
+        function renderizarTarjetas() {
+            if (!grid) return;
+            
+            if (productos.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem;">No hay productos disponibles</div>';
+                return;
             }
             
-            guardarStorage();
-            actualizarTabla();
-            cancelarEdicion();
+            let html = '';
+            
+            productos.forEach((prod, idx) => {
+                const tieneStock = prod.stock > 0;
+                const stockClass = tieneStock ? 'disponible' : 'agotado';
+                const stockIcon = tieneStock ? 'fa-check-circle' : 'fa-times-circle';
+                const stockText = tieneStock ? prod.stock : 'SIN STOCK';
+                
+                html += `
+                    <div class="card" data-categoria="${prod.categoria}" data-indice="${idx}">
+                        <div class="img-container">
+                            <img src="${prod.imagen}" alt="${prod.producto}" loading="lazy" 
+                                 onerror="this.src='https://placehold.co/300x200/dfeef8/3b7e9c?text=${encodeURIComponent(prod.categoria)}'">
+                            <span class="cat-icon-overlay">
+                                <i class="fas ${prod.icono || 'fa-tag'}"></i> ${prod.categoria}
+                            </span>
+                        </div>
+                        <div class="card-content">
+                            <div class="nombre-producto">${prod.producto}</div>
+                            <div class="precio-stock-row">
+                                <span class="precio">$${prod.precio.toLocaleString('es-AR')} <small>/${prod.unidad || 'unidad'}</small></span>
+                                <span class="stock-indicator ${stockClass}">
+                                    <i class="fas ${stockIcon}"></i> ${stockText}
+                                </span>
+                            </div>
+                            <div class="control-cantidad">
+                                <label><i class="fas fa-sort-numeric-up"></i> Cant</label>
+                                <input type="number" class="input-cantidad" value="1" min="1" max="${prod.stock}" 
+                                    ${tieneStock ? '' : 'disabled'} 
+                                    data-index="${idx}"
+                                    data-precio="${prod.precio}" 
+                                    data-producto="${prod.producto}"
+                                    data-stock="${prod.stock}">
+                            </div>
+                            <button class="btn-wsp ${tieneStock ? '' : 'disabled-btn'}" 
+                                    data-index="${idx}" 
+                                    data-producto="${prod.producto}" 
+                                    data-precio="${prod.precio}" 
+                                    data-stock="${prod.stock}">
+                                <i class="fab fa-whatsapp"></i> Pedir
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+            
+            // Aplicar filtro actual
+            aplicarFiltro();
+            
+            // Asignar eventos
+            asignarEventosWSP();
+            asignarEventosInputs();
+        }
+
+        // ========== EVENTOS WHATSAPP ==========
+        function asignarEventosWSP() {
+            document.querySelectorAll('.btn-wsp:not(.disabled-btn)').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const idx = this.dataset.index;
+                    const producto = this.dataset.producto;
+                    const precioUnit = parseFloat(this.dataset.precio);
+                    const stockMax = parseInt(this.dataset.stock);
+                    
+                    const inputCant = document.querySelector(`.input-cantidad[data-index="${idx}"]`);
+                    if (!inputCant) return;
+                    
+                    let cantidad = parseInt(inputCant.value);
+                    if (isNaN(cantidad) || cantidad < 1) cantidad = 1;
+                    if (cantidad > stockMax) cantidad = stockMax;
+                    inputCant.value = cantidad;
+                    
+                    const total = precioUnit * cantidad;
+                    
+                    const mensaje = `🛒 *Pedido Médico*%0A` +
+                                    `▪️ *Producto:* ${producto}%0A` +
+                                    `▪️ *Cantidad:* ${cantidad}%0A` +
+                                    `▪️ *Total:* $${total.toLocaleString('es-AR')}`;
+                    
+                    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}`, '_blank');
+                });
+            });
+        }
+
+        // ========== VALIDACIÓN DE INPUTS ==========
+        function asignarEventosInputs() {
+            document.querySelectorAll('.input-cantidad').forEach(inp => {
+                inp.addEventListener('change', function() {
+                    const max = parseInt(this.max);
+                    let val = parseInt(this.value);
+                    if (isNaN(val) || val < 1) val = 1;
+                    if (val > max) val = max;
+                    this.value = val;
+                });
+                
+                inp.addEventListener('input', function() {
+                    let val = parseInt(this.value);
+                    const max = parseInt(this.max);
+                    if (!isNaN(val) && val > max) this.value = max;
+                    else if (!isNaN(val) && val < 1) this.value = 1;
+                });
+            });
+        }
+
+        // ========== ESCUCHAR CAMBIOS EN LOCALSTORAGE ==========
+        window.addEventListener('storage', (e) => {
+            if (e.key === STORAGE_KEY) {
+                console.log('Cambios detectados, actualizando...');
+                cargarProductos();
+            }
         });
 
-        btnCancelar.addEventListener('click', cancelarEdicion);
-
-        // Botones adicionales
-        document.getElementById('cargarEjemplo').addEventListener('click', () => {
-            productos = [...productos, ...productosEjemplo];
-            guardarStorage();
-            actualizarTabla();
-        });
-
-        document.getElementById('exportarJSON').addEventListener('click', () => {
-            const blob = new Blob([JSON.stringify(productos, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `productos.json`;
-            a.click();
-        });
-
-        document.getElementById('importarJSON').addEventListener('click', () => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.onchange = (e) => {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    try {
-                        productos = JSON.parse(event.target.result);
-                        guardarStorage();
-                        actualizarTabla();
-                    } catch (error) {
-                        alert('Error al importar');
-                    }
-                };
-                reader.readAsText(e.target.files[0]);
-            };
-            input.click();
-        });
-
-        // Inicializar
-        cargarStorage();
+        // ========== INICIALIZAR ==========
+        cargarProductos();
+        
     })();
+    // Al abrir el modal, enfocar el campo usuario
+btnAbrirLogin.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    setTimeout(() => {
+        document.getElementById('username').focus();
+    }, 100);
+});
 </script>
 </body>
 </html>
