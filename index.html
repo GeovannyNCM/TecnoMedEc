@@ -3,33 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedicalBuy · Tienda Médica</title>
+    <title>MedicalBuy · Tienda</title>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ========== ESTILOS COMPACTOS ========== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-        }
-
-        body {
-            background: #f5fafd;
-            padding: 1rem;
-            color: #1a2e3f;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Header compacto */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f5fafd; padding: 1rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        /* Header */
         .header-compacto {
             display: flex;
             align-items: center;
@@ -40,28 +25,18 @@
             margin-bottom: 1.2rem;
             border: 1px solid #e0eef9;
         }
-
+        
         .logo-area {
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
-        .logo-area i {
-            font-size: 1.5rem;
-            color: #1d7a8f;
-            background: #e3f2f9;
-            padding: 0.4rem;
-            border-radius: 50%;
-        }
-
-        .logo-area h1 {
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
+        
+        .logo-area i { font-size: 1.5rem; color: #1d7a8f; background: #e3f2f9; padding: 0.4rem; border-radius: 50%; }
+        .logo-area h1 { font-size: 1.3rem; }
+        
         /* Botón admin */
-        .btn-admin-pequeno {
+        .btn-admin {
             background: #f0f7fc;
             color: #2c5f70;
             border: 1px solid #c2ddee;
@@ -74,8 +49,8 @@
             cursor: pointer;
             text-decoration: none;
         }
-
-        /* Modal de login */
+        
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -84,29 +59,19 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(3px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
         }
-
+        
         .modal-login {
             background: white;
             padding: 2rem;
             border-radius: 30px;
             width: 320px;
-            border: 1px solid #bddcee;
         }
-
-        .modal-login h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            color: #0d4151;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
+        
+        .modal-login h3 { margin-bottom: 1.5rem; color: #1f7a8c; }
         .modal-login input {
             width: 100%;
             padding: 0.8rem 1.2rem;
@@ -114,12 +79,12 @@
             border: 2px solid #d9eaf5;
             border-radius: 40px;
         }
-
+        
         .modal-botones {
             display: flex;
             gap: 10px;
         }
-
+        
         .btn-modal {
             flex: 1;
             padding: 0.7rem;
@@ -128,95 +93,65 @@
             font-weight: 600;
             cursor: pointer;
         }
-
-        .btn-ingresar {
-            background: #1f7a8c;
-            color: white;
-        }
-
-        .btn-cerrar {
-            background: #e2edf5;
-            color: #2c5f70;
-        }
-
+        
+        .btn-ingresar { background: #1f7a8c; color: white; }
+        .btn-cerrar { background: #e2edf5; color: #2c5f70; }
+        
         /* Filtros */
         .filtros-container {
             display: flex;
             flex-wrap: wrap;
             gap: 0.4rem;
-            margin: 1rem 0 1.2rem;
+            margin: 1rem 0;
             background: white;
             padding: 0.8rem 1rem;
             border-radius: 40px;
-            border: 1px solid #d2e6f2;
         }
-
+        
         .btn-categoria {
             background: transparent;
             border: none;
             padding: 0.4rem 1rem;
             border-radius: 30px;
             font-size: 0.8rem;
-            font-weight: 500;
-            color: #1d5a6e;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
         }
-
-        .btn-categoria:hover {
-            background: #e1f2fa;
-        }
-
-        .btn-categoria.activo {
-            background: #1f7a8c;
-            color: white;
-        }
-
-        .btn-categoria.activo i {
-            color: white;
-        }
-
-        /* Grid de productos */
+        
+        .btn-categoria.activo { background: #1f7a8c; color: white; }
+        
+        /* Grid */
         .categorias-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
         }
-
-        .hidden-category {
-            display: none !important;
-        }
-
-        /* Tarjetas */
+        
+        .hidden-category { display: none !important; }
+        
+        /* Cards */
         .card {
             background: white;
             border-radius: 20px;
             overflow: hidden;
             border: 1px solid #d4e6f0;
-            display: flex;
-            flex-direction: column;
         }
-
-        .card:hover {
-            box-shadow: 0 8px 16px rgba(13, 87, 107, 0.1);
-        }
-
+        
         .img-container {
             width: 100%;
             height: 120px;
-            background: #eaf3f9;
             position: relative;
             overflow: hidden;
         }
-
+        
         .img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
+        
         .cat-icon-overlay {
             position: absolute;
             top: 6px;
@@ -225,53 +160,34 @@
             padding: 0.2rem 0.8rem;
             border-radius: 30px;
             font-size: 0.65rem;
-            font-weight: 600;
-            color: #0c5466;
             display: flex;
             align-items: center;
             gap: 4px;
         }
-
-        .card-content {
-            padding: 0.8rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
+        
+        .card-content { padding: 0.8rem; }
+        
         .nombre-producto {
             font-size: 0.95rem;
             font-weight: 700;
-            color: #103542;
-            line-height: 1.3;
             height: 2.5rem;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
-
+        
         .precio-stock-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             background: #f0f7fc;
             border-radius: 30px;
             padding: 0.3rem 0.6rem;
-            font-size: 0.8rem;
+            margin: 0.5rem 0;
         }
-
-        .precio {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #166b7c;
-        }
-
-        .precio small {
-            font-size: 0.6rem;
-            font-weight: 400;
-        }
-
+        
+        .precio { font-size: 1.1rem; font-weight: 700; color: #166b7c; }
+        
         .stock-indicator {
             display: flex;
             align-items: center;
@@ -280,97 +196,68 @@
             padding: 0.2rem 0.6rem;
             border-radius: 30px;
             font-size: 0.65rem;
-            font-weight: 600;
         }
-
-        .stock-indicator.disponible {
-            color: #1c7242;
-            background: #e2ffee;
-        }
-
-        .stock-indicator.agotado {
-            color: #b13e3e;
-            background: #ffe9e9;
-        }
-
+        
+        .stock-indicator.disponible { color: #1c7242; background: #e2ffee; }
+        .stock-indicator.agotado { color: #b13e3e; background: #ffe9e9; }
+        
         .control-cantidad {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            background: white;
+            align-items: center;
             border: 1px solid #d0e2f0;
             border-radius: 30px;
             padding: 0.1rem 0.1rem 0.1rem 0.8rem;
+            margin: 0.5rem 0;
         }
-
+        
         .control-cantidad input {
             width: 50px;
             border: none;
             background: #eef7fd;
-            font-size: 0.9rem;
             text-align: center;
             padding: 0.3rem 0;
             border-radius: 30px;
         }
-
+        
         .btn-wsp {
             background: #25D366;
             color: white;
             border: none;
             padding: 0.5rem;
             border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            cursor: pointer;
         }
-
-        .btn-wsp:hover {
-            background: #1fab5a;
-        }
-
-        .disabled-btn {
-            opacity: 0.4;
-            pointer-events: none;
-            background: #98aebb;
-        }
-
-        .contador-productos {
-            font-size: 0.8rem;
-            color: #1f7a8c;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-note {
-            margin-top: 2rem;
-            font-size: 0.8rem;
-            color: #5f7e8f;
-            text-align: center;
-        }
+        
+        .disabled-btn { opacity: 0.4; pointer-events: none; background: #98aebb; }
+        .contador-productos { margin: 0.5rem 0; color: #1f7a8c; }
+        .footer-note { margin-top: 2rem; text-align: center; color: #5f7e8f; }
     </style>
 </head>
 <body>
 <div class="container">
-    <!-- Header con botón admin -->
+    <!-- Header -->
     <div class="header-compacto">
         <div class="logo-area">
             <i class="fas fa-briefcase-medical"></i>
             <h1>MedicalBuy</h1>
         </div>
-        <button class="btn-admin-pequeno" id="btnAbrirLogin">
+        <button class="btn-admin" id="btnAbrirLogin">
             <i class="fas fa-user-shield"></i> Admin
         </button>
     </div>
 
-    <!-- Modal de Login -->
+    <!-- Modal Login -->
     <div class="modal-overlay" id="modalLogin">
         <div class="modal-login">
             <h3><i class="fas fa-lock"></i> Acceso Admin</h3>
-            <input type="text" id="username" placeholder="Usuario" value="">
-            <input type="password" id="password" placeholder="Contraseña" value="">
+            <input type="text" id="username" placeholder="Usuario">
+            <input type="password" id="password" placeholder="Contraseña">
             <div class="modal-botones">
                 <button class="btn-modal btn-ingresar" id="btnIngresar">Ingresar</button>
                 <button class="btn-modal btn-cerrar" id="btnCerrarModal">Cancelar</button>
@@ -380,14 +267,12 @@
 
     <!-- Filtros -->
     <div class="filtros-container" id="filtrosCategorias"></div>
-    
-    <!-- Contador -->
     <div class="contador-productos" id="contadorProductos">Cargando productos...</div>
     
-    <!-- Grid de productos -->
+    <!-- Grid -->
     <div class="categorias-grid" id="appGrid">
         <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
-            <i class="fas fa-spinner fa-pulse"></i> Cargando productos desde Firebase...
+            <i class="fas fa-spinner fa-pulse"></i> Cargando...
         </div>
     </div>
 
@@ -397,29 +282,27 @@
 </div>
 
 <script>
-    // ========== CONFIGURACIÓN DE FIREBASE ==========
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDC9xFg5QypLX-ZnXBN55FmME39Lot9hLY",
-  authDomain: "medicalbuy-db.firebaseapp.com",
-  databaseURL: "https://medicalbuy-db-default-rtdb.firebaseio.com",
-  projectId: "medicalbuy-db",
-  storageBucket: "medicalbuy-db.firebasestorage.app",
-  messagingSenderId: "269696757008",
-  appId: "1:269696757008:web:9b74ecbed3f0e315e0c995",
-  measurementId: "G-664NJ16CLN"
-};
+    // ========== FIREBASE ==========
+    const firebaseConfig = {
+        apiKey: "AIzaSyDC9xFg5QyPLX-ZnXBN55FmME39Lot9hLY",
+        authDomain: "medicalbuy-db.firebaseapp.com",
+        databaseURL: "https://medicalbuy-db-default-rtdb.firebaseio.com",
+        projectId: "medicalbuy-db",
+        storageBucket: "medicalbuy-db.firebasestorage.app",
+        messagingSenderId: "269696757008",
+        appId: "1:269696757008:web:9b74cebed3f0e315e0c995",
+        measurementId: "G-664NJ16CLN"
+    };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
 
-    // ========== CONFIGURACIÓN ==========
-    const WHATSAPP_NUMBER = "593986501112"; // CAMBIA POR TU NÚMERO
-    const ADMIN_USER = "admin@medicalbuy.com";
-    const ADMIN_PASS = "AdminTecno2025";
+    // ========== CONFIG ==========
+    const WHATSAPP_NUMBER = "5491122334455";
+    const ADMIN_USER = "Admin";
+    const ADMIN_PASS = "AdminTecno";
 
-    // ========== ELEMENTOS DOM ==========
+    // ========== DOM ==========
     const modal = document.getElementById('modalLogin');
     const btnAbrirLogin = document.getElementById('btnAbrirLogin');
     const btnCerrarModal = document.getElementById('btnCerrarModal');
@@ -430,16 +313,14 @@ const analytics = getAnalytics(app);
     const filtrosDiv = document.getElementById('filtrosCategorias');
     const contadorSpan = document.getElementById('contadorProductos');
 
-    // ========== VARIABLES GLOBALES ==========
     let productos = [];
     let categoriaActiva = 'todas';
 
-    // ========== LOGIN ==========
+    // ========== LOGIN MODAL ==========
     btnAbrirLogin.addEventListener('click', () => {
         modal.style.display = 'flex';
         username.value = '';
         password.value = '';
-        setTimeout(() => username.focus(), 100);
     });
 
     btnCerrarModal.addEventListener('click', () => {
@@ -456,28 +337,14 @@ const analytics = getAnalytics(app);
     });
 
     modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-        }
+        if (e.target === modal) modal.style.display = 'none';
     });
 
-    // ========== CARGAR PRODUCTOS DESDE FIREBASE ==========
+    // ========== CARGAR PRODUCTOS ==========
     function cargarProductos() {
-        const productosRef = database.ref('productos');
-        
-        productosRef.on('value', (snapshot) => {
+        database.ref('productos').on('value', (snapshot) => {
             const data = snapshot.val();
-            if (data) {
-                // Convertir objeto de Firebase a array
-                productos = Object.keys(data).map(key => ({
-                    ...data[key],
-                    id: key
-                }));
-            } else {
-                productos = [];
-            }
-            
-            console.log('Productos cargados:', productos.length);
+            productos = data ? Object.keys(data).map(key => ({ ...data[key], id: key })) : [];
             renderizarFiltros();
             renderizarTarjetas();
         });
@@ -486,34 +353,20 @@ const analytics = getAnalytics(app);
     // ========== RENDERIZAR FILTROS ==========
     function renderizarFiltros() {
         const categorias = [...new Set(productos.map(p => p.categoria))].sort();
-        
-        let html = `
-            <button class="btn-categoria ${categoriaActiva === 'todas' ? 'activo' : ''}" data-categoria="todas">
-                <i class="fas fa-border-all"></i> Todos
-            </button>
-        `;
+        let html = `<button class="btn-categoria activo" data-categoria="todas"><i class="fas fa-border-all"></i> Todos</button>`;
         
         categorias.forEach(cat => {
-            const prodEjemplo = productos.find(p => p.categoria === cat);
-            const icono = prodEjemplo?.icono || 'fa-tag';
-            html += `
-                <button class="btn-categoria ${categoriaActiva === cat ? 'activo' : ''}" data-categoria="${cat}">
-                    <i class="fas ${icono}"></i> ${cat}
-                </button>
-            `;
+            const icono = productos.find(p => p.categoria === cat)?.icono || 'fa-tag';
+            html += `<button class="btn-categoria" data-categoria="${cat}"><i class="fas ${icono}"></i> ${cat}</button>`;
         });
         
         filtrosDiv.innerHTML = html;
         
-        // Eventos de filtro
         document.querySelectorAll('.btn-categoria').forEach(btn => {
             btn.addEventListener('click', function() {
-                const categoria = this.dataset.categoria;
-                categoriaActiva = categoria;
-                
                 document.querySelectorAll('.btn-categoria').forEach(b => b.classList.remove('activo'));
                 this.classList.add('activo');
-                
+                categoriaActiva = this.dataset.categoria;
                 aplicarFiltro();
             });
         });
@@ -522,73 +375,51 @@ const analytics = getAnalytics(app);
     // ========== APLICAR FILTRO ==========
     function aplicarFiltro() {
         const tarjetas = document.querySelectorAll('.card');
-        let productosVisibles = 0;
+        let visibles = 0;
         
         tarjetas.forEach(card => {
-            const catCard = card.dataset.categoria;
-            
-            if (categoriaActiva === 'todas' || catCard === categoriaActiva) {
+            if (categoriaActiva === 'todas' || card.dataset.categoria === categoriaActiva) {
                 card.classList.remove('hidden-category');
-                productosVisibles++;
+                visibles++;
             } else {
                 card.classList.add('hidden-category');
             }
         });
         
-        if (categoriaActiva === 'todas') {
-            contadorSpan.textContent = `Mostrando todos los productos (${productosVisibles})`;
-        } else {
-            contadorSpan.textContent = `Mostrando ${categoriaActiva}: ${productosVisibles} productos`;
-        }
+        contadorSpan.textContent = categoriaActiva === 'todas' 
+            ? `Mostrando todos (${visibles})` 
+            : `Mostrando ${categoriaActiva}: ${visibles}`;
     }
 
     // ========== RENDERIZAR TARJETAS ==========
     function renderizarTarjetas() {
         if (productos.length === 0) {
-            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem;">No hay productos disponibles</div>';
-            contadorSpan.textContent = 'No hay productos';
+            grid.innerHTML = '<div style="grid-column:1/-1; text-align:center;">No hay productos</div>';
             return;
         }
         
         let html = '';
-        
         productos.forEach((prod, idx) => {
             const tieneStock = prod.stock > 0;
-            const stockClass = tieneStock ? 'disponible' : 'agotado';
-            const stockIcon = tieneStock ? 'fa-check-circle' : 'fa-times-circle';
-            const stockText = tieneStock ? prod.stock : 'SIN STOCK';
-            
             html += `
-                <div class="card" data-categoria="${prod.categoria}" data-indice="${idx}">
+                <div class="card" data-categoria="${prod.categoria}">
                     <div class="img-container">
-                        <img src="${prod.imagen}" alt="${prod.producto}" loading="lazy" 
-                             onerror="this.src='https://placehold.co/300x200/dfeef8/3b7e9c?text=${encodeURIComponent(prod.categoria)}'">
-                        <span class="cat-icon-overlay">
-                            <i class="fas ${prod.icono || 'fa-tag'}"></i> ${prod.categoria}
-                        </span>
+                        <img src="${prod.imagen}" onerror="this.src='https://placehold.co/300x200/dfeef8/3b7e9c?text=IMG'">
+                        <span class="cat-icon-overlay"><i class="fas ${prod.icono}"></i> ${prod.categoria}</span>
                     </div>
                     <div class="card-content">
                         <div class="nombre-producto">${prod.producto}</div>
                         <div class="precio-stock-row">
-                            <span class="precio">$${prod.precio.toLocaleString('es-AR')} <small>/${prod.unidad || 'unidad'}</small></span>
-                            <span class="stock-indicator ${stockClass}">
-                                <i class="fas ${stockIcon}"></i> ${stockText}
+                            <span class="precio">$${prod.precio.toLocaleString()} <small>/${prod.unidad}</small></span>
+                            <span class="stock-indicator ${tieneStock ? 'disponible' : 'agotado'}">
+                                <i class="fas ${tieneStock ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${tieneStock ? prod.stock : 'SIN'}
                             </span>
                         </div>
                         <div class="control-cantidad">
                             <label><i class="fas fa-sort-numeric-up"></i> Cant</label>
-                            <input type="number" class="input-cantidad" value="1" min="1" max="${prod.stock}" 
-                                ${tieneStock ? '' : 'disabled'} 
-                                data-index="${idx}"
-                                data-precio="${prod.precio}" 
-                                data-producto="${prod.producto}"
-                                data-stock="${prod.stock}">
+                            <input type="number" class="input-cantidad" value="1" min="1" max="${prod.stock}" ${tieneStock ? '' : 'disabled'}>
                         </div>
-                        <button class="btn-wsp ${tieneStock ? '' : 'disabled-btn'}" 
-                                data-index="${idx}" 
-                                data-producto="${prod.producto}" 
-                                data-precio="${prod.precio}" 
-                                data-stock="${prod.stock}">
+                        <button class="btn-wsp ${tieneStock ? '' : 'disabled-btn'}">
                             <i class="fab fa-whatsapp"></i> Pedir
                         </button>
                     </div>
@@ -598,54 +429,20 @@ const analytics = getAnalytics(app);
         
         grid.innerHTML = html;
         aplicarFiltro();
-        asignarEventosWSP();
-        asignarEventosInputs();
-    }
-
-    // ========== EVENTOS WHATSAPP ==========
-    function asignarEventosWSP() {
-        document.querySelectorAll('.btn-wsp:not(.disabled-btn)').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const idx = this.dataset.index;
-                const producto = this.dataset.producto;
-                const precioUnit = parseFloat(this.dataset.precio);
-                const stockMax = parseInt(this.dataset.stock);
-                
-                const inputCant = document.querySelector(`.input-cantidad[data-index="${idx}"]`);
-                if (!inputCant) return;
-                
-                let cantidad = parseInt(inputCant.value);
-                if (isNaN(cantidad) || cantidad < 1) cantidad = 1;
-                if (cantidad > stockMax) cantidad = stockMax;
-                
-                const total = precioUnit * cantidad;
-                
-                const mensaje = `🛒 *Pedido Médico*%0A` +
-                                `▪️ *Producto:* ${producto}%0A` +
-                                `▪️ *Cantidad:* ${cantidad}%0A` +
-                                `▪️ *Total:* $${total.toLocaleString('es-AR')}`;
-                
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}`, '_blank');
+        
+        // Eventos WhatsApp
+        document.querySelectorAll('.btn-wsp:not(.disabled-btn)').forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                const prod = productos[i];
+                const cant = document.querySelectorAll('.input-cantidad')[i]?.value || 1;
+                const total = prod.precio * cant;
+                const msg = `🛒 *Pedido*%0A▪️ ${prod.producto}%0A▪️ Cant: ${cant}%0A▪️ Total: $${total.toLocaleString()}`;
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
             });
         });
     }
 
-    // ========== VALIDACIÓN DE INPUTS ==========
-    function asignarEventosInputs() {
-        document.querySelectorAll('.input-cantidad').forEach(inp => {
-            inp.addEventListener('change', function() {
-                const max = parseInt(this.max);
-                let val = parseInt(this.value);
-                if (isNaN(val) || val < 1) val = 1;
-                if (val > max) val = max;
-                this.value = val;
-            });
-        });
-    }
-
-    // ========== INICIALIZAR ==========
+    // ========== INICIAR ==========
     cargarProductos();
 </script>
 </body>
